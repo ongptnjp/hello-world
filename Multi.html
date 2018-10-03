@@ -1,45 +1,146 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Multiply Dimention</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-      
+
 </head>
+
 <body>
-    <div>
-        <h1>Multi dimension</h1>
-        <input type="number" name="numInput" placeholder="Enter Size of Array" required/> <br>
-        <input type="button" id="enter" value="Enter"/> <br>
-        <label id="result"></label>
+    <div id="root">
+        <form>
+            <h1>Multi dimension</h1>
+            <input type="number" id="numInput" placeholder="Enter Size of Array" required /> <br><br>
+            <input type="button" id="enter" value="Enter" onclick="getMultiply()" />
+            <input type="reset" id="reset" value="Reset" onclick="getReset()" /> <br>
+            <label id="result"></label>
+            <div id="tableControl" style="display : none">
+                <h3>Array 1</h3>
+                <div id="tab1"></div>
+
+                <h3>Array 2</h3>
+                <div id="tab2"></div>
+
+                <h3>result Brute Force</h3>
+                <div id="tab3"></div>
+
+            </div>
+        </form>
     </div>
-    
+
 
     <script>
-        var numArr = [[8, 3], [2, 4], [3, 6]];
-        document.getElementById("result").innerHTML = numArr;
-        console.log(numArr);
+        var numArr = [
+            [8, 3],
+            [2, 4],
+            [3, 6]
+        ];
+        //document.getElementById("result").innerHTML = numArr;
+        //console.log(numArr);
+        var test1 = [
+            [6, 6, 6],
+            [3, 7, 7],
+            [5, 10, 0]
+        ];
+        var test2 = [
+            [9, 1, 4],
+            [0, 2, 2],
+            [8, 6, 1]
+        ];
 
-        var excute = [ ];
-        
-        //brute force
-        function multiply(a,b) {
-            var aNumRows = a.length, aNumCols = a[0].length,
-                bNumRows = b.length, bNumCols = b[0].length,
-                m = new Array[aNumRows];
+        function makeTableHTML(myArray) {
+            var result = "<table border=1>";
+            for (var i = 0; i < myArray.length; i++) {
+                result += "<tr>";
+                for (var j = 0; j < myArray[i].length; j++) {
+                    result += "<td>" + myArray[i][j] + "</td>";
+                }
+                result += "</tr>";
+            }
+            result += "</table>";
+
+            return result;
+        }
+
+        //var disArray = makeTableHTML(test1);
+        //var disArray = createTab(test1);
+        // document.getElementById("tab1").innerHTML = disArray;
+        // document.getElementById("tab2").innerHTML = makeTableHTML(test2);
+
+
+
+        //create array
+        function newArray(props) {
+            var newArr = [];
+
+            for (var i = 0; i < props; i++) {
+                var childArr = [];
+                for (var j = 0; j < props; j++) {
+                    childArr.push(Math.round(Math.random() * 10));
+                }
+                newArr.push(childArr);
+            }
+            return newArr
+        }
+        // var set1 = newArray(3);
+        // console.log(set1);
+        // var set2 = newArray(3);
+        // console.log(set2);
+
+        //brute force multiply
+        function multiply(a, b) {
+            var aNumRows = a.length,
+                aNumCols = a[0].length,
+                bNumRows = b.length,
+                bNumCols = b[0].length,
+                m = new Array(aNumRows);
+            // console.log("a[0].length = "+ a[0].length );
+            // console.log("b[0].length = "+ b[0].length );
             for (var r = 0; r < aNumRows; ++r) {
                 m[r] = new Array(bNumCols);
-                for( var c = 0; c < bNumCols; ++c){
+                // console.log("round " + r);
+                for (var c = 0; c < bNumCols; ++c) {
                     m[r][c] = 0;
-                    for (var i =0; i < aNumCols; ++i){
+                    for (var i = 0; i < aNumCols; ++i) {
+                        // console.log("r = " + r + " c = " + c + " i = " + i);
+
                         m[r][c] += a[r][i] * b[i][c];
+                        // console.log("m[r][c] = "+ m[r][c] + " a [r][i] = " + a[r][i] + " * b[i][c] = "+ b[i][c])
                     }
                 }
+                // console.log("end round " + r );
             }
             return m;
         }
 
+        function getMultiply(props) {
+            var getNumber = document.getElementById("numInput").value
+            var arr1 = newArray(getNumber)
+            var arr2 = newArray(getNumber)
+
+            var result = multiply(arr1, arr2)
+            document.getElementById("tab1").innerHTML = makeTableHTML(arr1);
+            document.getElementById("tab2").innerHTML = makeTableHTML(arr2);
+            document.getElementById("tab3").innerHTML = makeTableHTML(result);
+            var x = document.getElementById("tableControl")
+            x.style.display = "block";
+
+
+        }
+
+        function getReset() {
+            var x = document.getElementById("tableControl")
+            x.style.display = "none" ;
+        }
+
+        var result = multiply(test1, test2)
+        console.log(result);
+        console.log("test1.length = " + test1.length);
+        console.log("test2.length = " + test2.length)
     </script>
 </body>
+
 </html>
