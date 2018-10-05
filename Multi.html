@@ -33,8 +33,10 @@
                 <h3>Array 2</h3>
                 <div id="tab2"></div>
 
-                <h3>result Brute Force</h3>
+                <h3>Strassen’s</h3>
                 <div id="tab3"></div>
+                <label id="resp1"></label>
+
 
             </div>
         </form>
@@ -123,7 +125,12 @@
             var result = multiply(arr1, arr2)
             document.getElementById("tab1").innerHTML = makeTableHTML(arr1);
             document.getElementById("tab2").innerHTML = makeTableHTML(arr2);
+            var startTime1 = new Date();
             document.getElementById("tab3").innerHTML = makeTableHTML(result);
+            var startTime2 = new Date();
+            var resp1 = startTime2 - startTime1;
+            var millin;
+            document.getElementById("resp1").innerHTML = resp1;
             var x = document.getElementById("tableControl")
             x.style.display = "block";
 
