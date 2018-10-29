@@ -33,7 +33,7 @@
                 <h3>Array 2</h3>
                 <div id="tab2"></div>
 
-                <h3>Strassen’s</h3>
+                <h3>Brute Force</h3>
                 <div id="tab3"></div>
                 <span>Response Time = </span>
                 <label id="resp1"></label>
@@ -123,19 +123,22 @@
             var arr1 = newArray(getNumber)
             var arr2 = newArray(getNumber)
 
+            var start = Date.now();
+            console.log('start :>', start)
             var result = multiply(arr1, arr2)
+            var end = Date.now();
+            console.log('end :>', end)
             document.getElementById("tab1").innerHTML = makeTableHTML(arr1);
             document.getElementById("tab2").innerHTML = makeTableHTML(arr2);
-            var startTime1 = new Date();
             document.getElementById("tab3").innerHTML = makeTableHTML(result);
-            var startTime2 = new Date();
-            var resp1 = startTime2 - startTime1;
-            var millin;
-            document.getElementById("resp1").innerHTML = resp1;
+            var resp1 = end - start;
+            var respond = new Date(resp1);
+            var seccond = respond.getSeconds();
+            var milliseccond = respond.getMilliseconds();
+            console.log('diff :>', resp1)
+            document.getElementById("resp1").innerHTML = seccond + '.' + milliseccond + ' sec';
             var x = document.getElementById("tableControl")
             x.style.display = "block";
-
-
         }
 
         function getReset() {
