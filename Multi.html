@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Multiply Dimention</title>
+    <title>Multiply Dimension</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
@@ -328,11 +328,63 @@
             return C
         }
 
-        function getMultiply(props) {
+        function Strassen2n2 (a,b) {
+            console.log('a ', a)
+            console.log('b ',b)
+            var s1 = b[0][1]-b[1][1]
+            console.log('s1', s1)
+            var s2 = a[0][0]+a[0][1]
+            console.log('s2', s2)
+            var s3 = a[1][0]+a[1][1]
+            var s4 = b[1][0]-b[0][0]
+            var s5 = a[0][0]+a[1][1]
+            var s6 = b[0][0]+b[1][1]
+            var s7 = a[0][1]-a[1][1]
+            var s8 = b[1][0]+b[1][1]
+            var s9 = a[0][0]-a[1][0]
+            var s10 = b[0][0]+b[0][1]
+
+            var p1 = a[0][0] * s1
+            console.log(p1)
+            var p2 = s2 * b[1][1]
+            console.log(p2)
+            var p3 = b[0][0] * b[0][0]
+            console.log(p3)
+            var p4 = a[1][1] * s4
+            console.log(p4)
+            var p5 = s5 * s6
+            console.log(p5)
+            var p6 = s7 * s8
+            console.log(p6)
+            var p7 = s9 * s10
+            console.log(p7)
+
+            var c = []
+            c.push( [] )
+            c.push( [] )
+            var c11 = p5 + p4 - p2 + p6
+            console.log('c11 '+c11)
+            var c12 = p1 + p2
+            console.log('c12 '+c12)
+            var c21 = p3 + p4
+            console.log('c21 '+c21)
+            var c22 = p5 + p1 - p3 - p7
+            console.log('c22 '+c22)
+            c[0].push(c11)
+            c[0].push(c12)
+
+            c[1].push(c21)
+            c[1].push(c22)
+            return c
+        }
+        function getMultiply() {
             var getNumber = document.getElementById("numInput").value
             var arr1 = newArray(getNumber)
             var arr2 = newArray(getNumber)
-
+            if (getNumber == 2) {
+                var reserve = Strassen2n2(arr1, arr2)
+                console.log('reserve 2*2 :>', reserve)
+            }
             var start = Date.now();
             console.log('start :>', start)
             var result = multiply(arr1, arr2)
@@ -344,7 +396,7 @@
             var resp0 = end - start;
             var respond = new Date(resp0);
             var seccond = respond.getSeconds();
-            var milliseccond = respond.getMilliseconds();
+            var milliseccond = respond.getMilliseconds() * 10000
             console.log('diff :>', resp0)
             console.log('result :> ', result)
             document.getElementById("resp0").innerHTML = seccond + '.' + milliseccond + ' sec';
@@ -371,7 +423,7 @@
             var resp2 = end2 - start2
             var respond2 = new Date(resp2)
             var seccond2 = respond2.getSeconds()
-            var milliseccond2 = respond2.getMilliseconds()
+            var milliseccond2 = respond2.getMilliseconds() * 10000
             console.log('strassenJs :> ', strassenMulti)
             document.getElementById('resp2').innerHTML = seccond2 + '.' + milliseccond2 + ' sec'
             // // var strassenMulti2 = Strassen_1(arr1, arr2, strassenArray)
